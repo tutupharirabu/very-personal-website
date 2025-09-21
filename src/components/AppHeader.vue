@@ -1,7 +1,9 @@
 <script setup>
+import { RouterLink } from 'vue-router'
+
 const navLinks = [
-  { label: 'Work', href: '#work' },
-  { label: 'About', href: '#about' },
+  { label: 'Work', to: { name: 'work' } },
+  { label: 'About', to: { name: 'about' } },
 ]
 
 import logoUrl from '@/assets/logo.png'
@@ -10,14 +12,17 @@ import logoUrl from '@/assets/logo.png'
 <template>
   <header class="app-header bg-neutral-900/95">
     <div class="app-header__inner">
-      <a href="#" class="app-header__logo" aria-label="Home">
+      <!-- Logo balik ke home -->
+      <RouterLink to="/" class="app-header__logo" aria-label="Home">
         <img :src="logoUrl" alt="Zara logo" class="app-header__logo-image" />
-      </a>
+      </RouterLink>
 
       <nav class="app-header__nav" aria-label="Primary">
-        <a v-for="link in navLinks" :key="link.label" :href="link.href" class="app-header__nav-link text-slate-100">
+        <!-- Gunakan RouterLink agar bisa auto-active -->
+        <RouterLink v-for="link in navLinks" :key="link.label" :to="link.to" class="app-header__nav-link text-slate-100"
+          active-class="is-active" exact-active-class="is-active">
           {{ link.label }}
-        </a>
+        </RouterLink>
       </nav>
     </div>
   </header>
@@ -28,7 +33,7 @@ import logoUrl from '@/assets/logo.png'
 .app-header {
   position: relative;
   z-index: 10;
-  padding: clamp(1.5rem, 4vw, 2.5rem) clamp(1.25rem, 5vw, 3rem);
+  padding: clamp(1.5rem, 4vw, 3.5rem) clamp(1.25rem, 5vw, 3rem);
   box-shadow: none !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;

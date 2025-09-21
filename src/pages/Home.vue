@@ -213,9 +213,9 @@
 import WaterDropGrid from '@/components/WaterDropGrid.vue'
 
 import NameText from '@/components/NameText.vue';
+import ReadyToBuildText from '@/components/ReadyToBuildText.vue';
 import WorkExperienceText from '@/components/WorkExperienceText.vue';
 import BusinessExperienceText from '@/components/BusinessExperienceText.vue';
-import ReadyToBuildText from '@/components/ReadyToBuildText.vue';
 
 import RevealLinks from '@/components/RevealLink/RevealLinks.vue';
 
