@@ -17,7 +17,7 @@ const highlightGrid = [
   { heading: 'Currently Building', lines: ['SpaceRent BTP v2', 'Matchako SOPs', 'Arunika Gaming Shop'] },
 ]
 
-import ReadyToBuildText from '@/components/ReadyToBuildText.vue';
+import ReadyToBuildText from '@/components/Text/ReadyToBuildText.vue';
 import RevealLinks from '@/components/RevealLink/RevealLinks.vue';
 
 defineOptions({ name: 'AboutPage' })

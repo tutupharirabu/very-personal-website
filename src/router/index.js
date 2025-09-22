@@ -2,8 +2,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 import HomePage from '@/pages/Home.vue'
-import WorkPage from '@/pages/Work.vue'
+import ProjectPage from '@/pages/Project.vue'
 import AboutPage from '@/pages/About.vue'
+
+import POSWebsite from '@/pages/ProjectDetail/02-ProjectDetail.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,10 +17,11 @@ const router = createRouter({
       meta: { transition: 'fade' },
     },
     {
-      path: '/work',
-      name: 'work',
-      component: WorkPage,
+      path: '/projects',
+      name: 'project',
+      component: ProjectPage,
     },
+    { path: '/projects/pos-website', name: 'pos-website', component: POSWebsite },
     {
       path: '/about',
       name: 'about',

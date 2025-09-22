@@ -1,7 +1,9 @@
 <script setup>
 import { RouterView } from 'vue-router'
+
 import AppHeader from '@/components/AppHeader.vue'
-import MusicToggle from '@/components/MusicToggle.vue'
+import MusicToggle from '@/components/SpecialEffect/MusicToggle.vue'
+
 import track from '@/assets/music.mp3'
 </script>
 

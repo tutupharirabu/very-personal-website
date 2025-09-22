@@ -210,12 +210,12 @@
 </template>
 
 <script setup>
-import WaterDropGrid from '@/components/WaterDropGrid.vue'
+import WaterDropGrid from '@/components/SpecialEffect/WaterDropGrid.vue'
 
-import NameText from '@/components/NameText.vue';
-import ReadyToBuildText from '@/components/ReadyToBuildText.vue';
-import WorkExperienceText from '@/components/WorkExperienceText.vue';
-import BusinessExperienceText from '@/components/BusinessExperienceText.vue';
+import NameText from '@/components/Text/NameText.vue';
+import ReadyToBuildText from '@/components/Text/ReadyToBuildText.vue';
+import WorkExperienceText from '@/components/Text/WorkExperienceText.vue';
+import BusinessExperienceText from '@/components/Text/BusinessExperienceText.vue';
 
 import RevealLinks from '@/components/RevealLink/RevealLinks.vue';
 
