@@ -1,27 +1,38 @@
 <!-- src/pages/work/SpacerentBTPv1.vue -->
 <script setup>
+import { RouterLink } from 'vue-router'
+
 import TiltCard from '@/components/Tilt/TiltCard.vue'
 import WaterDropGrid from '@/components/SpecialEffect/WaterDropGrid.vue'
 
 import ReadyToBuildText from '@/components/Text/ReadyToBuildText.vue';
 import RevealLinks from '@/components/RevealLink/RevealLinks.vue';
 
-// swap these to your real assets
 import Dashboard from '@/assets/ProjectDetail/02/Dashboard.png'
+import Login from '@/assets/ProjectDetail/02/LoginRole.png'
+import Cashier from '@/assets/ProjectDetail/02/Cashier.png'
+import Inventory from '@/assets/ProjectDetail/02/Inventory.png'
+import Profile from '@/assets/ProjectDetail/02/Profile.png'
+import Receipt from '@/assets/ProjectDetail/02/ReceiptFormat.png'
+import Peripheral from '@/assets/ProjectDetail/02/Peripheral.png'
+
+import BTP from '@/assets/ProjectDetail/01/BTP.png'
+import Arcadia from '@/assets/ProjectDetail/03/Arcadia.png'
+import BTPv2 from '@/assets/ProjectDetail/04/BTPv2.png'
 
 const more = {
-  a: Dashboard,
-  b: Dashboard,
-  c: Dashboard,
+  a: BTP,
+  b: Arcadia,
+  c: BTPv2,
 }
 
 const flowScreens = [
-  { src: Dashboard, caption: 'entry point (composer)' },
-  { src: Dashboard, caption: 'promotional screen' },
-  { src: Dashboard, caption: 'feature setup context' },
-  { src: Dashboard, caption: 'voice capture (sample text)' },
-  { src: Dashboard, caption: 'try it out (playback)' },
-  { src: Dashboard, caption: 'success (ready to use)' },
+  { src: Login, caption: 'different login role' },
+  { src: Cashier, caption: 'cashier view' },
+  { src: Inventory, caption: 'inventory management' },
+  { src: Profile, caption: 'user profile & roles' },
+  { src: Receipt, caption: 'receipt format (preview)' },
+  { src: Peripheral, caption: 'peripherals setup (printer, drawer, scanner)' },
 ]
 </script>
 
@@ -101,7 +112,7 @@ const flowScreens = [
           </div>
           <div class="p-6 sm:p-8 border-neutral">
             <h4 class="mb-2 font-mono text-base font-semibold underline">Tech-Stack</h4>
-            <p class="font-mono text-slate-800">Laravel + VueJs</p>
+            <p class="font-mono text-slate-800">Laravel · VueJs · MySQL · Docker · Caddy</p>
           </div>
         </div>
       </div>
@@ -174,41 +185,53 @@ const flowScreens = [
     <WaterDropGrid orientation="horizontal" :bandHeight="200" :cellSize="22" :cellGap="12" class="my-14" />
 
     <!-- ===== More work ===== -->
+    <!-- ===== More work ===== -->
     <section class="relative z-10 mx-auto max-w-6xl px-6 pb-20 mt-28">
-
       <div class="grid gap-10 md:grid-cols-3">
-        <article class="group">
+        <!-- Spacerent BTP v1 -->
+        <RouterLink to="/projects/spacerent-btp-v1"
+          class="group block outline-none rounded-2xl focus-visible:ring-2 focus-visible:ring-slate-500"
+          aria-label="Open Spacerent BTP v1 case study">
           <div
             class="overflow-hidden rounded-2xl bg-white shadow-lg ring-1 ring-black/5 transition-transform duration-300 group-hover:-translate-y-1">
-            <img :src="more.a" alt="Airbnb Photo Viewer" class="h-64 w-full object-cover" />
+            <img :src="more.a" alt="Spacerent BTP v1" class="h-64 w-full object-cover" />
           </div>
-          <h3 class="mt-4 font-serif text-2xl">Airbnb<br />Photo Viewer</h3>
+          <h3 class="mt-4 font-serif text-2xl">Spacerent BTP v1</h3>
           <p class="mt-2 max-w-[36ch] font-mono text-[0.95rem] leading-7 text-slate-700">
-            A redesign of Airbnb’s photo viewer across desktop web, mobile web, iOS, and Android.
+            A room & equipment reservation platform for Bandung Techno Park, designed for fast, conflict-free scheduling
+            with role-based access and clear audit trails.
           </p>
-        </article>
+        </RouterLink>
 
-        <article class="group">
+        <!-- IoT Analytics Platform -->
+        <RouterLink to="/projects/iot-analytics-platform"
+          class="group block outline-none rounded-2xl focus-visible:ring-2 focus-visible:ring-slate-500"
+          aria-label="Open IoT Analytics Platform case study">
           <div
             class="overflow-hidden rounded-2xl bg-white shadow-lg ring-1 ring-black/5 transition-transform duration-300 group-hover:-translate-y-1">
-            <img :src="more.b" alt="Clubhouse Chats" class="h-64 w-full object-cover" />
+            <img :src="more.b" alt="IoT Analytics Platform" class="h-64 w-full object-cover" />
           </div>
-          <h3 class="mt-4 font-serif text-2xl">Clubhouse<br />Chats</h3>
+          <h3 class="mt-4 font-serif text-2xl">Internet-of-Things (IoT) Analytics Platform</h3>
           <p class="mt-2 max-w-[36ch] font-mono text-[0.95rem] leading-7 text-slate-700">
-            Group voice messages that string together into conversation-stories.
+            IoT platform for Arcadia Flora Tech—secure device-to-cloud telemetry, real-time dashboards, alerts, and
+            role-based insights.
           </p>
-        </article>
+        </RouterLink>
 
-        <article class="group">
+        <!-- Spacerent BTP v2 -->
+        <RouterLink to="/projects/spacerent-btp-v2"
+          class="group block outline-none rounded-2xl focus-visible:ring-2 focus-visible:ring-slate-500"
+          aria-label="Open Spacerent BTP v2 case study">
           <div
             class="overflow-hidden rounded-2xl bg-white shadow-lg ring-1 ring-black/5 transition-transform duration-300 group-hover:-translate-y-1">
-            <img :src="more.c" alt="Contextual Notifications" class="h-64 w-full object-cover" />
+            <img :src="more.c" alt="Spacerent BTP v2" class="h-64 w-full object-cover" />
           </div>
-          <h3 class="mt-4 font-serif text-2xl">Contextual<br />Notifications</h3>
+          <h3 class="mt-4 font-serif text-2xl">Spacerent BTP v2</h3>
           <p class="mt-2 max-w-[36ch] font-mono text-[0.95rem] leading-7 text-slate-700">
-            A multi-layered notification system that scales with attention and context.
+            Same fast booking—now smoother: mobile-first UI, cleaner nav, inline conflict hints, and snappier,
+            prefetch-powered performance.
           </p>
-        </article>
+        </RouterLink>
       </div>
     </section>
 

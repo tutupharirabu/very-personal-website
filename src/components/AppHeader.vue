@@ -53,7 +53,9 @@ watch(() => route.fullPath, closeMenu)
 
     <!-- Mobile overlay + panel -->
     <div class="mobile-menu__backdrop bg-neutral-900/95" v-show="isMenuOpen" aria-hidden="true" @click="closeMenu" />
-    <nav id="mobile-menu" class="mobile-menu" :class="{ 'is-open': isMenuOpen }" aria-label="Mobile">
+
+    <nav id="mobile-menu" class="mobile-menu" :class="{ 'is-open': isMenuOpen }" aria-label="Mobile"
+      @click.self="closeMenu"> <!-- ⬅️ tambahkan ini -->
       <RouterLink v-for="link in navLinks" :key="link.label" :to="link.to"
         class="mobile-menu__link app-header__nav-link app-header__nav-link--wide" @click="closeMenu">
         {{ link.label }}

@@ -1,11 +1,14 @@
 <script setup>
 import { useRouter } from 'vue-router'
+
 import PastProjects from '@/components/Text/ProjectText.vue'
 import TiltCard from '@/components/Tilt/TiltCard.vue'
 
 // GANTI path ini ke gambarmu sendiri
-import ImgSpacerentBTP from '@/assets/dd.png'
+import ImgSpacerentBTPv1 from '@/assets/ProjectDetail/01/BTP.png'
 import ImgPOSWebsite from '@/assets/ProjectDetail/02/Dashboard.png'
+import ImgArcadia from '@/assets/ProjectDetail/03/Arcadia.png'
+import ImgSpacerentBTPv2 from '@/assets/ProjectDetail/04/BTPv2.png'
 
 defineOptions({ name: 'WorkPage' })
 
@@ -55,7 +58,7 @@ const onKey = (e, slug) => {
           @click="go('spacerent-btp-v1')" @keydown="onKey($event, 'spacerent-btp-v1')">
           <TiltCard :width="1080" :height="1920" :depth="70" :rotationRange="18">
             <template #media>
-              <img :src="ImgSpacerentBTP" alt="Spacerent BTP v1 preview"
+              <img :src="ImgSpacerentBTPv1" alt="Spacerent BTP v1 preview"
                 class="h-full w-full rounded-[2rem] object-cover shadow-xl ring-1 ring-black/5" />
             </template>
           </TiltCard>
@@ -119,7 +122,7 @@ const onKey = (e, slug) => {
           @keydown="onKey($event, 'iot-analytics-platform')">
           <TiltCard :width="1080" :height="1920" :depth="70" :rotationRange="18">
             <template #media>
-              <img :src="ImgSpacerentBTP" alt="IoT Analytics Platform preview"
+              <img :src="ImgArcadia" alt="IoT Analytics Platform preview"
                 class="h-full w-full rounded-[2rem] object-cover shadow-xl ring-1 ring-black/5" />
             </template>
           </TiltCard>
@@ -140,8 +143,11 @@ const onKey = (e, slug) => {
           </div>
           <div class="work-hero__rule"></div>
           <p class="work-hero__lede">
-            A room & equipment reservation platform for Bandung Techno Park,
-            designed for fast, conflict-free scheduling with role-based access and clear audit trails.
+            Same fast booking—now smoother. Spacerent BTP v2 brings a mobile-first UI, clearer navigation, and a single
+            inline
+            booking flow with availability & conflict tips. Lighter components, skeleton loading, and smart prefetch
+            keep it
+            snappy even at peak—without changing how teams work.
           </p>
         </div>
 
@@ -149,7 +155,7 @@ const onKey = (e, slug) => {
           @click="go('spacerent-btp-v2')" @keydown="onKey($event, 'spacerent-btp-v2')">
           <TiltCard :width="1080" :height="1920" :depth="70" :rotationRange="18">
             <template #media>
-              <img :src="ImgSpacerentBTP" alt="Spacerent BTP v2 preview"
+              <img :src="ImgSpacerentBTPv2" alt="Spacerent BTP v2 preview"
                 class="h-full w-full rounded-[2rem] object-cover shadow-xl ring-1 ring-black/5" />
             </template>
           </TiltCard>
