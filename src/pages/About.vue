@@ -10,8 +10,18 @@ const highlightGrid = [
   { heading: 'Experience', lines: ['1+ year building backend & DevOps pipelines'] },
   { heading: 'Superpower', lines: ['Turning complex systems into smooth user flows'] },
   { heading: 'Reading', lines: ['Pulang', 'by Leila S. Chudori'] },
-  { heading: 'Volunteering', lines: ['Helping juniors learn web & cloud basics'] },
-  { heading: 'Toolbox', lines: ['Node.js · Laravel · Docker · GCP'] },
+  { heading: 'Learning', lines: ['Golang fundamentals & concurrency · Anime.js micro-interactions in Vue · Load testing with k6'] },
+  {
+    heading: 'Toolbox',
+    lines: [
+      'Backend: Laravel (PHP) · Node.js',
+      'Data: PostgreSQL · MySQL · Redis (cache/queue)',
+      'Messaging/IoT: MQTT · RabbitMQ',
+      'Infra: Docker · Nginx · Linux · CI/CD (Jenkins)',
+      'Cloud Infra: GCP (Cloud Run, Cloud SQL) · AWS (ECS) · Cloudflare · Terraform (IaC)',
+      'Observability: Prometheus · Grafana'
+    ]
+  },
   { heading: 'Coffee Orders', lines: ['Malewa Coffee ☕', 'Cold Brew on hot days'] },
   { heading: 'Favorite Matcha', lines: ['Signature Matcha Latte 🍵', 'with extra cheezy foam'] },
   { heading: 'Currently Building', lines: ['SpaceRent BTP v2', 'Matchako SOPs', 'Arunika Gaming Shop'] },

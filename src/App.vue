@@ -1,6 +1,9 @@
 <script setup>
 import { RouterView } from 'vue-router'
 
+import { SpeedInsights } from '@vercel/speed-insights/vue';
+import { Analytics } from '@vercel/analytics/vue';
+
 import AppHeader from '@/components/AppHeader.vue'
 import MusicToggle from '@/components/SpecialEffect/MusicToggle.vue'
 
@@ -8,6 +11,8 @@ import track from '@/assets/music.mp3'
 </script>
 
 <template>
+  <SpeedInsights />
+  <Analytics />
   <div class="relative min-h-screen flex flex-col bg-white overflow-hidden">
     <!-- Texture Layer -->
     <div class="app-texture" aria-hidden="true"></div>
