@@ -309,6 +309,7 @@ const onKey = (e, slug) => {
   margin-inline: auto;
   max-width: 1250px;
   padding-top: clamp(2rem, 5vw, 3rem);
+  padding-bottom: clamp(2.5rem, 7vw, 4rem);
 }
 
 .work-hero__grid {
@@ -378,6 +379,9 @@ const onKey = (e, slug) => {
   }
 
   /* lebih rapat di mobile */
+  .work-hero {
+    padding-bottom: clamp(3.25rem, 10vw, 5rem);
+  }
 
   .work-hero__heading {
     grid-template-columns: 1fr;
@@ -409,6 +413,7 @@ const onKey = (e, slug) => {
     place-items: center;
     /* TRUE center */
     justify-self: center;
+    margin-bottom: clamp(1rem, 4vw, 2rem);
   }
 
   /* Overwrite inline width/height dari TiltCard agar responsive */
@@ -420,6 +425,10 @@ const onKey = (e, slug) => {
     /* proporsi enak dilihat */
     margin-inline: auto;
   }
+
+  :deep(.divider) {
+    margin-block: clamp(1.5rem, 5vw, 2.25rem);
+  }
 }
 
 /* (opsional) Phone kecil banget: batasi lagi */
@@ -427,6 +436,10 @@ const onKey = (e, slug) => {
   .work-hero__media>* {
     width: calc(100vw - (var(--xpad) * 2)) !important;
     /* full width minus padding */
+  }
+
+  :deep(.divider) {
+    margin-block: clamp(1.5rem, 5vw, 2.25rem);
   }
 }
 </style>
