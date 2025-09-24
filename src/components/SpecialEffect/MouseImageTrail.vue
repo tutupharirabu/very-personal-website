@@ -12,8 +12,9 @@ const ready = ref(false)
 
 const last = ref({ x: 0, y: 0 })
 const renderCount = ref(0)
+const isPointerDown = ref(false)
 
-let rect // cache bounds
+let rect
 const updateRect = () => { rect = containerRef.value?.getBoundingClientRect() }
 
 const preloadAll = async (srcs) => {
@@ -21,7 +22,6 @@ const preloadAll = async (srcs) => {
     srcs.map(src => new Promise(res => {
       const img = new Image()
       img.src = src
-      // decode() is best (non-blocking); fall back to onload
       if (img.decode) img.decode().then(res).catch(res)
       else img.onload = () => res()
     }))
@@ -34,7 +34,6 @@ onMounted(async () => {
   await preloadAll(props.images)
   ready.value = true
 })
-
 onBeforeUnmount(() => window.removeEventListener('resize', updateRect))
 
 const dist = (x1, y1, x2, y2) => Math.hypot(x2 - x1, y2 - y1)
@@ -65,15 +64,15 @@ const renderNext = (x, y) => {
   renderCount.value++
 }
 
-// rAF throttle so we don’t do work on every mouse event
+/* -------- Pointer Events (mouse + touch) -------- */
 let rafPending = false
 let nextX = 0, nextY = 0
 
-const onMove = (e) => {
+const handleMove = (clientX, clientY) => {
   if (!ready.value) return
   if (!rect) updateRect()
-  nextX = e.clientX - rect.left
-  nextY = e.clientY - rect.top
+  nextX = clientX - rect.left
+  nextY = clientY - rect.top
   if (rafPending) return
   rafPending = true
   requestAnimationFrame(() => {
@@ -84,10 +83,24 @@ const onMove = (e) => {
     rafPending = false
   })
 }
+
+const onPointerDown = (e) => {
+  isPointerDown.value = true
+  updateRect()
+  handleMove(e.clientX, e.clientY) // sprinkle on first touch
+}
+const onPointerMove = (e) => {
+  // For touch, only draw while finger is down; for mouse, always
+  if (e.pointerType === 'touch' && !isPointerDown.value) return
+  handleMove(e.clientX, e.clientY)
+}
+const onPointerUp = () => { isPointerDown.value = false }
+
 </script>
 
 <template>
-  <div ref="containerRef" class="mouse-trail" @mousemove="onMove" @mouseenter="updateRect()">
+  <div ref="containerRef" class="mouse-trail" @pointerdown="onPointerDown" @pointermove="onPointerMove"
+    @pointerup="onPointerUp" @pointercancel="onPointerUp" @mouseleave="onPointerUp" @pointerenter="updateRect()">
     <slot />
     <img v-for="(img, i) in images" :key="i" :src="img" :alt="`mouse move image ${i}`" :data-mouse-move-index="i"
       v-show="ready" loading="eager" decoding="async" fetchpriority="high" class="trail-img" />
@@ -98,6 +111,9 @@ const onMove = (e) => {
 .mouse-trail {
   position: relative;
   overflow: hidden;
+  /* allow free drawing on touch without scrolling the page inside this area */
+  touch-action: none;
+  /* or 'pan-y' if you want vertical scroll to pass through */
 }
 
 .trail-img {
@@ -111,7 +127,6 @@ const onMove = (e) => {
   border: 2px solid #000;
   object-fit: cover;
   opacity: 0;
-  /* smooth compositing */
   will-change: transform, opacity;
   transform: translate3d(-50%, -50%, 0);
   backface-visibility: hidden;

@@ -170,7 +170,7 @@
             <circle cx="10" cy="10" r="8" />
           </svg>
         </div>
-        <div class="timeline-end sm:mb-10 font-mono">
+        <div class="timeline-end mb-10 font-mono">
           <time class="font-mono italic">July 2025 - Now</time>
           <div class="text-lg font-black">Operational Manager at Malewa Coffee</div>
           <br>
