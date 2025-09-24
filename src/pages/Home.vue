@@ -125,13 +125,13 @@
       </li>
     </ul>
 
-    <div class="divider divider-neutral"></div>
+    <div class="divider divider-neutral" v-if="mounted && !isTouch"></div>
 
     <section>
-      <MouseImageTrail :images="imgs" :renderImageBuffer="isTouch ? 90 : 50" :rotationRange="20">
+      <MouseImageTrail v-if="mounted && !isTouch" :images="imgs" :renderImageBuffer="50" :rotationRange="20">
         <section class="grid h-screen w-full place-content-center">
           <p class="flex items-center gap-2 text-3xl font-bold uppercase text-black">
-            <span class="font-mono">{{ isTouch ? 'Tap & move' : 'Hover me' }}</span>
+            <span class="font-mono">Hover me</span>
           </p>
         </section>
       </MouseImageTrail>
@@ -232,16 +232,25 @@ import BusinessExperienceText from '@/components/Text/BusinessExperienceText.vue
 import RevealLinks from '@/components/RevealLink/RevealLinks.vue';
 import MouseImageTrail from '@/components/SpecialEffect/MouseImageTrail.vue';
 
-const isTouch =
-  typeof window !== 'undefined' &&
-  ('ontouchstart' in window || navigator.maxTouchPoints > 0)
-
 const imgs = Array.from({ length: 16 }, (_, i) =>
   new URL(`/src/assets/ManyImage/${i + 1}.jpg`, import.meta.url).href
 )
 
+import { ref, onMounted } from 'vue'
+
 defineOptions({
   name: 'HomePage'
+})
+
+const isTouch = ref(false)
+const mounted = ref(false)
+
+onMounted(() => {
+  isTouch.value =
+    (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) ||
+    ('ontouchstart' in window) ||
+    (navigator.maxTouchPoints > 0)
+  mounted.value = true
 })
 </script>
 
