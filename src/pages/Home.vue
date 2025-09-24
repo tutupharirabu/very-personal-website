@@ -89,7 +89,7 @@
             <circle cx="10" cy="10" r="8" />
           </svg>
         </div>
-        <div class="timeline-end md:mb-10 font-mono">
+        <div class="timeline-end mb-10 font-mono">
           <time class="font-mono italic">September 2024 - February 2025</time>
           <div class="text-xl font-black">
             Co-Founder & Backend Developer at Arcadia Flora Tech
@@ -128,6 +128,18 @@
     <div class="divider divider-neutral"></div>
 
     <section>
+      <MouseImageTrail :images="imgs" :renderImageBuffer="isTouch ? 90 : 50" :rotationRange="20">
+        <section class="grid h-screen w-full place-content-center">
+          <p class="flex items-center gap-2 text-3xl font-bold uppercase text-black">
+            <span class="font-mono">{{ isTouch ? 'Tap & move' : 'Hover me' }}</span>
+          </p>
+        </section>
+      </MouseImageTrail>
+    </section>
+
+    <div class="divider divider-neutral"></div>
+
+    <section>
       <BusinessExperienceText />
     </section>
 
@@ -158,7 +170,7 @@
             <circle cx="10" cy="10" r="8" />
           </svg>
         </div>
-        <div class="timeline-end md:mb-10 font-mono">
+        <div class="timeline-end sm:mb-10 font-mono">
           <time class="font-mono italic">July 2025 - Now</time>
           <div class="text-lg font-black">Operational Manager at Malewa Coffee</div>
           <br>
@@ -218,6 +230,15 @@ import WorkExperienceText from '@/components/Text/WorkExperienceText.vue';
 import BusinessExperienceText from '@/components/Text/BusinessExperienceText.vue';
 
 import RevealLinks from '@/components/RevealLink/RevealLinks.vue';
+import MouseImageTrail from '@/components/SpecialEffect/MouseImageTrail.vue';
+
+const isTouch =
+  typeof window !== 'undefined' &&
+  ('ontouchstart' in window || navigator.maxTouchPoints > 0)
+
+const imgs = Array.from({ length: 16 }, (_, i) =>
+  new URL(`/src/assets/ManyImage/${i + 1}.jpg`, import.meta.url).href
+)
 
 defineOptions({
   name: 'HomePage'
