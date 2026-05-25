@@ -1,36 +1,59 @@
 <script setup>
 const bioParagraphs = [
-  "I’m a curious developer who loves turning ideas into reliable systems — from backend code and DevOps pipelines to digital ventures.",
-  "I thrive at the crossroads of tech and entrepreneurship: launching products, crafting smooth operations, and exploring how people interact with software and services.",
-  "Beyond work, I enjoy tinkering with new stacks, sipping matcha or coffee I’ve brewed myself, discovering indie games, and finding fresh ways to blend creativity with technology.",
+  "I believe that most problems, whether in code, business, or daily life, are really just systems waiting to be understood. That curiosity to figure out how things actually work, and why they sometimes don’t, is what gets me going every day.",
+  "I learn by doing and by getting close to the problem. That means sitting with business teams to understand their pain, tracing where systems break, and building solutions that fit the people using them. I move between tech and operations naturally, because to me they’re just two sides of the same question.",
+  "Right now I’m a fresh grad from Telkom University, working as an IT System Analyst at Matchako Indonesia, and growing into cybersecurity with a DevSecOps mindset. Outside of that, I run Arunika Gaming Shop and co-own matchako.dalamkampus. Different worlds, same approach.",
 ]
 
 const highlightGrid = [
   { heading: 'Location', lines: ['Bandung, Indonesia'] },
-  { heading: 'Experience', lines: ['1+ year building backend & DevOps pipelines'] },
-  { heading: 'Superpower', lines: ['Turning complex systems into smooth user flows'] },
-  { heading: 'Reading', lines: ['Pulang', 'by Leila S. Chudori'] },
-  { heading: 'Learning', lines: ['Golang fundamentals & concurrency · Anime.js micro-interactions in Vue · Load testing with k6'] },
+  { heading: 'Experience', lines: ['1+ year building fullstack systems end-to-end'] },
+  { heading: 'Superpower', lines: ['Tracing where systems break and building solutions that fit the people using them'] },
+  { heading: 'Reading', lines: ['Start With Why', 'by Simon Sinek'] },
+  { heading: 'Learning', indent: true, lines: ['• System Analysis methodology', '• Cybersecurity fundamentals', '• DevSecOps practices', '• Multi-agent AI orchestration, building role-specific agents (marketing, HRD, ops) with fine-tuned prompts per position'] },
   {
     heading: 'Toolbox',
+    indent: true,
     lines: [
-      'Backend: Laravel (PHP) · Node.js',
-      'Data: PostgreSQL · MySQL · Redis (cache/queue)',
-      'Messaging/IoT: MQTT · RabbitMQ',
-      'Infra: Docker · Nginx · Linux · CI/CD (Jenkins)',
-      'Cloud Infra: GCP (Cloud Run, Cloud SQL) · AWS (ECS) · Cloudflare · Terraform (IaC)',
-      'Observability: Prometheus · Grafana'
+      '• Frontend: Vue.js · Inertia.js · Alpine.js · Preact.js · Astro.js',
+      '• Backend: Laravel (PHP) · Node.js · Adonis.js',
+      '• Data: PostgreSQL · MySQL · Redis (cache/queue)',
+      '• Messaging/IoT: MQTT · RabbitMQ',
+      '• Infra: Docker · Nginx · Linux · CI/CD (Jenkins)',
+      '• Cloud Infra: GCP (Cloud Run, Cloud SQL) · AWS (ECS) · Cloudflare · Terraform (IaC) · Dalang.io',
+      '• Observability: Prometheus · Grafana · Umami · Uptime Kuma'
     ]
   },
-  { heading: 'Coffee Orders', lines: ['Malewa Coffee ☕', 'Cold Brew on hot days'] },
-  { heading: 'Favorite Matcha', lines: ['Signature Matcha Latte 🍵', 'with extra cheezy foam'] },
-  { heading: 'Currently Building', lines: ['SpaceRent BTP v2', 'Matchako SOPs', 'Arunika Gaming Shop'] },
+  { heading: 'Favorite Matcha', lines: ['Signature Matcha Latte 🍵', 'with extra creamy foam'] },
+  { heading: 'Currently Building', lines: ['Arunika Gaming Shop', 'matchako.dalamkampus', 'MatchaKo Indonesia internal tools'] },
 ]
 
 import ReadyToBuildText from '@/components/Text/ReadyToBuildText.vue';
 import RevealLinks from '@/components/RevealLink/RevealLinks.vue';
 
 defineOptions({ name: 'AboutPage' })
+
+const BLOB_COLORS = [
+  '#4D96FF', '#6BCB77', '#FF5A76', '#FFD93D', '#A78BFA',
+  '#34D399', '#FB923C', '#F472B6', '#60A5FA', '#FBBF24',
+  '#E879F9', '#2DD4BF', '#F87171', '#818CF8',
+]
+const rand = (min, max) => Math.random() * (max - min) + min
+const ANIMS = ['orbit-a', 'orbit-b', 'orbit-c']
+
+const blobs = Array.from({ length: Math.floor(rand(10, 16)) }, (_, i) => ({
+  id: i,
+  style: {
+    background: BLOB_COLORS[Math.floor(Math.random() * BLOB_COLORS.length)],
+    width: `min(${rand(50, 85).toFixed(0)}vmin, ${rand(380, 620).toFixed(0)}px)`,
+    height: `min(${rand(50, 85).toFixed(0)}vmin, ${rand(380, 620).toFixed(0)}px)`,
+    opacity: rand(0.6, 0.92).toFixed(2),
+    animation: `${ANIMS[Math.floor(Math.random() * ANIMS.length)]} ${rand(24, 72).toFixed(0)}s ${rand(-20, 0).toFixed(1)}s linear infinite ${Math.random() > 0.5 ? 'reverse' : 'normal'}`,
+    position: 'absolute',
+    top: `${rand(-10, 90).toFixed(0)}%`,
+    left: `${rand(-10, 90).toFixed(0)}%`,
+  }
+}))
 </script>
 
 <template>
@@ -39,9 +62,7 @@ defineOptions({ name: 'AboutPage' })
     <div class="about__bg" aria-hidden="true">
       <div class="about__texture"></div>
 
-      <div class="about__blob about__blob--a"></div>
-      <div class="about__blob about__blob--b"></div>
-      <div class="about__blob about__blob--c"></div>
+      <div v-for="blob in blobs" :key="blob.id" class="about__blob" :style="blob.style"></div>
     </div>
 
     <section class="about__content relative z-10">
@@ -56,14 +77,15 @@ defineOptions({ name: 'AboutPage' })
         <div></div>
 
         <figure class="about__portrait">
-          <img src="@/assets/irfan.png" alt="Portrait of Zara" />
+          <img src="@/assets/irfan.webp" alt="Portrait of Zara" />
         </figure>
       </div>
 
       <div class="about__table">
         <div v-for="item in highlightGrid" :key="item.heading" class="about__table-cell">
           <h3 class="about__table-heading">{{ item.heading }}</h3>
-          <p v-for="line in item.lines" :key="line" class="about__table-line">{{ line }}</p>
+          <p v-for="line in item.lines" :key="line"
+            :class="['about__table-line', { 'about__table-line--indent': item.indent }]">{{ line }}</p>
         </div>
       </div>
     </section>
@@ -122,34 +144,9 @@ defineOptions({ name: 'AboutPage' })
 /* === Blob === */
 .about__blob {
   position: absolute;
-  width: min(80vmin, 620px);
-  height: min(80vmin, 620px);
   border-radius: 999px;
   filter: blur(110px);
   mix-blend-mode: multiply;
-  opacity: 0.85;
-}
-
-.about__blob--a {
-  background: #4D96FF;
-  top: -10%;
-  left: -6%;
-  animation: orbit-a 42s linear infinite;
-}
-
-.about__blob--b {
-  background: #FFD93D;
-  bottom: -12%;
-  right: -8%;
-  animation: orbit-b 30s linear infinite;
-}
-
-.about__blob--c {
-  background: #FF5A76;
-  top: 10%;
-  right: 15%;
-  opacity: 0.78;
-  animation: orbit-c 66s linear infinite reverse;
 }
 
 /* animasi orbit */
@@ -321,6 +318,11 @@ defineOptions({ name: 'AboutPage' })
 }
 
 /* baris tabel */
+.about__table-line--indent {
+  padding-left: 1em;
+  text-indent: -1em;
+}
+
 .about__table-line {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
   /* ⬅️ mono */
@@ -350,6 +352,11 @@ defineOptions({ name: 'AboutPage' })
     border-right: none;
   }
 
+  /* reset rule 3-column, lalu terapkan 2-column */
+  .about__table-cell:nth-last-child(-n + 3) {
+    border-bottom: 1px solid rgba(55, 65, 81, 0.18);
+  }
+
   .about__table-cell:nth-last-child(-n + 2) {
     border-bottom: none;
   }
@@ -362,6 +369,12 @@ defineOptions({ name: 'AboutPage' })
 
   .about__table-cell {
     border-right: none;
+  }
+
+  /* reset semua rule sebelumnya, hanya last-child yang tanpa border */
+  .about__table-cell:nth-last-child(-n + 3),
+  .about__table-cell:nth-last-child(-n + 2) {
+    border-bottom: 1px solid rgba(55, 65, 81, 0.18);
   }
 
   .about__table-cell:last-child {

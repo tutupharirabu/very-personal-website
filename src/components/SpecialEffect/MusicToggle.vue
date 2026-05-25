@@ -148,13 +148,14 @@ function hideLater() {
         :aria-label="isPlaying ? 'Pause music' : 'Play music'" class="rounded-full bg-neutral-900/85 p-3 text-white shadow-[0_8px_24px_rgba(0,0,0,.25)] backdrop-blur transition
                hover:bg-neutral-900/90 active:scale-[.98] focus:outline-none focus:ring-2 focus:ring-white/60">
         <!-- icon: on/off -->
-        <svg v-if="isPlaying" viewBox="0 0 24 24" class="h-6 w-6" fill="currentColor" aria-hidden="true">
-          <path d="M3 10v4h4l5 4V6l-5 4H3z" />
-          <path d="M16.5 8a5.5 5.5 0 010 8M14 6a8 8 0 010 12" fill="none" stroke="currentColor" stroke-width="2" />
+        <svg v-if="isPlaying" viewBox="0 0 24 24" class="h-6 w-6" fill="none" aria-hidden="true">
+          <path d="M11 5L6 9H2v6h4l5 4V5z" fill="currentColor" />
+          <path d="M15.54 8.46a5 5 0 010 7.07" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          <path d="M19.07 4.93a10 10 0 010 14.14" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
         </svg>
-        <svg v-else viewBox="0 0 24 24" class="h-6 w-6" fill="currentColor" aria-hidden="true">
-          <path d="M3 10v4h4l5 4V6l-5 4H3z" />
-          <path d="M16 8l6 8M22 8l-6 8" fill="none" stroke="currentColor" stroke-width="2" />
+        <svg v-else viewBox="0 0 24 24" class="h-6 w-6" fill="none" aria-hidden="true">
+          <path d="M11 5L6 9H2v6h4l5 4V5z" fill="currentColor" />
+          <path d="M17 9l6 6M23 9l-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
         </svg>
       </button>
     </div>

@@ -4,13 +4,35 @@ import { useRouter } from 'vue-router'
 import PastProjects from '@/components/Text/ProjectText.vue'
 import TiltCard from '@/components/Tilt/TiltCard.vue'
 
-// GANTI path ini ke gambarmu sendiri
-import ImgSpacerentBTPv1 from '@/assets/ProjectDetail/01/BTP.png'
-import ImgPOSWebsite from '@/assets/ProjectDetail/02/Dashboard.png'
-import ImgArcadia from '@/assets/ProjectDetail/03/Arcadia.png'
-import ImgSpacerentBTPv2 from '@/assets/ProjectDetail/04/BTPv2.png'
+import ImgSpacerentBTPv1 from '@/assets/ProjectDetail/01/BTP.webp'
+import ImgPOSWebsite from '@/assets/ProjectDetail/02/Dashboard.webp'
+import ImgArcadia from '@/assets/ProjectDetail/03/Arcadia.webp'
+import ImgSpacerentBTPv2 from '@/assets/ProjectDetail/04/BTPv2.webp'
+import ImgMatchakoLandingPage from '@/assets/ProjectDetail/05/HeroGridHome.webp'
 
 defineOptions({ name: 'WorkPage' })
+
+const BLOB_COLORS = [
+  '#4D96FF', '#6BCB77', '#FF5A76', '#FFD93D', '#A78BFA',
+  '#34D399', '#FB923C', '#F472B6', '#60A5FA', '#FBBF24',
+  '#E879F9', '#2DD4BF', '#F87171', '#818CF8',
+]
+const rand = (min, max) => Math.random() * (max - min) + min
+const ANIMS = ['orbit-a', 'orbit-b', 'orbit-c']
+
+const blobs = Array.from({ length: Math.floor(rand(10, 16)) }, (_, i) => ({
+  id: i,
+  style: {
+    background: BLOB_COLORS[Math.floor(Math.random() * BLOB_COLORS.length)],
+    width: `min(${rand(50, 85).toFixed(0)}vmin, ${rand(380, 620).toFixed(0)}px)`,
+    height: `min(${rand(50, 85).toFixed(0)}vmin, ${rand(380, 620).toFixed(0)}px)`,
+    opacity: rand(0.6, 0.92).toFixed(2),
+    animation: `${ANIMS[Math.floor(Math.random() * ANIMS.length)]} ${rand(24, 72).toFixed(0)}s ${rand(-20, 0).toFixed(1)}s linear infinite ${Math.random() > 0.5 ? 'reverse' : 'normal'}`,
+    position: 'absolute',
+    top: `${rand(-10, 90).toFixed(0)}%`,
+    left: `${rand(-10, 90).toFixed(0)}%`,
+  }
+}))
 
 const router = useRouter()
 const go = (slug) => router.push(`/projects/${slug}`)
@@ -26,9 +48,7 @@ const onKey = (e, slug) => {
   <main class="work relative min-h-screen overflow-hidden bg-[#f6f4f1] text-slate-900">
     <!-- texture + blobs -->
     <div class="work__texture" aria-hidden="true"></div>
-    <div class="work__blob work__blob--a" aria-hidden="true"></div>
-    <div class="work__blob work__blob--b" aria-hidden="true"></div>
-    <div class="work__blob work__blob--c" aria-hidden="true"></div>
+    <div v-for="blob in blobs" :key="blob.id" class="work__blob" aria-hidden="true" :style="blob.style"></div>
 
     <section>
       <PastProjects />
@@ -162,6 +182,38 @@ const onKey = (e, slug) => {
         </div>
       </div>
     </section>
+
+    <div class="divider divider-neutral"></div>
+
+    <!-- MatchaKo Landing Page -->
+    <section class="work-hero">
+      <div class="work-hero__grid">
+        <div class="work-hero__copy clickable" role="link" tabindex="0"
+          aria-label="Open project: MatchaKo Indonesia Landing Page" @click="go('matchako-landing-page')"
+          @keydown="onKey($event, 'matchako-landing-page')">
+          <div class="work-hero__heading">
+            <h1><span>MatchaKo Indonesia Landing Page</span></h1>
+            <div class="work-hero__index">05</div>
+          </div>
+          <div class="work-hero__rule"></div>
+          <p class="work-hero__lede">
+            A conversion-focused landing page for MatchaKo Indonesia's franchise program. Fast, mobile-first, and built
+            with an interactive ROI calculator to help prospective partners make informed decisions.
+          </p>
+        </div>
+
+        <div class="work-hero__media clickable" role="link" tabindex="0"
+          aria-label="Open project: MatchaKo Indonesia Landing Page" @click="go('matchako-landing-page')"
+          @keydown="onKey($event, 'matchako-landing-page')">
+          <TiltCard :width="1080" :height="1920" :depth="70" :rotationRange="18">
+            <template #media>
+              <img :src="ImgMatchakoLandingPage" alt="MatchaKo Indonesia Landing Page preview"
+                class="h-full w-full rounded-[2rem] object-cover shadow-xl ring-1 ring-black/5" />
+            </template>
+          </TiltCard>
+        </div>
+      </div>
+    </section>
   </main>
 </template>
 
@@ -187,7 +239,7 @@ const onKey = (e, slug) => {
 .work__texture {
   position: absolute;
   inset: -15%;
-  background-image: url('https://i.imgur.com/PsjPzdO.png');
+  background-image: url('https://i.imgur.com/PsjPzdO.webp');
   background-size: 220px;
   background-repeat: repeat;
   mix-blend-mode: multiply;
@@ -199,35 +251,10 @@ const onKey = (e, slug) => {
 /* blobs */
 .work__blob {
   position: absolute;
-  width: min(80vmin, 620px);
-  height: min(80vmin, 620px);
   border-radius: 999px;
   filter: blur(110px);
   mix-blend-mode: multiply;
-  opacity: .85;
   z-index: 0;
-}
-
-.work__blob--a {
-  background: #4D96FF;
-  top: -10%;
-  left: -6%;
-  animation: orbit-a 42s linear infinite;
-}
-
-.work__blob--b {
-  background: #FFD93D;
-  bottom: -12%;
-  right: -8%;
-  animation: orbit-b 30s linear infinite;
-}
-
-.work__blob--c {
-  background: #FF5A76;
-  top: 10%;
-  right: 15%;
-  opacity: .78;
-  animation: orbit-c 66s linear infinite reverse;
 }
 
 @keyframes orbit-a {
@@ -326,7 +353,7 @@ const onKey = (e, slug) => {
 
 .work-hero__heading {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) min-content;
+  grid-template-columns: 1fr auto;
   align-items: end;
   gap: clamp(1rem, 3vw, 3rem);
 }
@@ -407,6 +434,10 @@ const onKey = (e, slug) => {
     text-align: center;
   }
 
+  .work-hero__lede {
+    margin-inline: auto;
+  }
+
   .work-hero__media {
     width: 100%;
     display: grid;
@@ -421,8 +452,7 @@ const onKey = (e, slug) => {
     width: min(calc(100vw - (var(--xpad) * 2)), 560px) !important;
     max-width: 100%;
     height: auto !important;
-    aspect-ratio: 16 / 10;
-    /* proporsi enak dilihat */
+    aspect-ratio: 4 / 3;
     margin-inline: auto;
   }
 

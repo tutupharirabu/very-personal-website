@@ -73,6 +73,7 @@ const observeContainer = () => {
   const el = containerRef.value
   if (!el || typeof ResizeObserver === 'undefined') return
   resizeObserver = new ResizeObserver(entries => {
+    updateViewportState()
     for (const entry of entries) updateGridFromRect(entry.contentRect)
   })
   resizeObserver.observe(el)
@@ -94,8 +95,6 @@ onMounted(() => {
   if (typeof window !== 'undefined') {
     resizeListener = () => {
       updateViewportState()
-      const el = containerRef.value
-      if (el) updateGridFromRect(el.getBoundingClientRect())
     }
     window.addEventListener('resize', resizeListener, { passive: true })
   }

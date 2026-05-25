@@ -31,8 +31,8 @@ const transition = { duration: 2.5, ease: "easeInOut" };
         </h2>
 
         <p class="font-mono text-base leading-relaxed text-slate-600">
-          Crafted scalable digital experiences, aligning engineering strategy
-          with product goals to help teams launch faster and more reliably.
+          Building systems that scale, bridging engineering with product goals,
+          and helping teams ship things that actually work in the real world.
         </p>
       </div>
     </div>

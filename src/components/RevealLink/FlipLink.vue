@@ -16,7 +16,7 @@ const letters = computed(() => props.label.split(""));
 <template>
   <!-- pakai Motion sebagai anchor -->
   <Motion :as="'a'" :initial="'initial'" :whileHover="'hovered'" :href="href"
-    class="relative block overflow-hidden whitespace-nowrap text-4xl font-black uppercase sm:text-7xl md:text-8xl lg:text-9xl"
+    class="relative block overflow-hidden whitespace-nowrap text-5xl font-black uppercase sm:text-7xl md:text-8xl lg:text-9xl"
     :style="{ lineHeight: 0.75 }">
     <!-- baris atas: dari y:0 ke -100% saat hover -->
     <div>

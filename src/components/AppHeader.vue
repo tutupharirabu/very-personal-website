@@ -7,7 +7,7 @@ const navLinks = [
   { label: 'About', to: { name: 'about' } },
 ]
 
-import logoUrl from '@/assets/logo.png'
+import logoUrl from '@/assets/logo.webp'
 
 const isMenuOpen = ref(false)
 const closeMenu = () => { isMenuOpen.value = false }
@@ -42,7 +42,7 @@ watch(() => route.fullPath, closeMenu)
         @click="toggleMenu">
         <span class="sr-only">Menu</span>
         <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
-          <g :class="{ 'is-open': isMenuOpen }">
+          <g>
             <path class="line line--1" d="M4 7h16" />
             <path class="line line--2" d="M4 12h16" />
             <path class="line line--3" d="M4 17h16" />
@@ -68,16 +68,14 @@ watch(() => route.fullPath, closeMenu)
 .app-header {
   position: relative;
   z-index: 40;
-  padding: clamp(1.5rem, 4vw, 3.5rem) clamp(1.25rem, 5vw, 3rem)
+  padding: clamp(1.5rem, 4vw, 3.5rem) clamp(1.5rem, 7vw, 6rem);
 }
 
 .app-header__inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  max-width: 1200px;
-  margin: 0 auto;
-  width: 100%
+  width: 100%;
 }
 
 .app-header__logo-image {
@@ -181,19 +179,15 @@ watch(() => route.fullPath, closeMenu)
   stroke: currentColor;
   stroke-width: 2.4;
   stroke-linecap: round;
-  transition: transform .22s, opacity .22s
 }
 
-.is-open .line--1 {
-  transform: translateY(5px) rotate(45deg)
+.app-header__menu-toggle:active svg {
+  transform: scale(0.88);
+  opacity: 0.7;
 }
 
-.is-open .line--2 {
-  opacity: 0
-}
-
-.is-open .line--3 {
-  transform: translateY(-5px) rotate(-45deg)
+.app-header__menu-toggle svg {
+  transition: transform .12s, opacity .12s;
 }
 
 /* Mobile overlay + sheet */

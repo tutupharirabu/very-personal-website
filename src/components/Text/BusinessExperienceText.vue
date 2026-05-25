@@ -33,9 +33,8 @@ const transition = { duration: 2.5, ease: "easeInOut" }
         </h2>
 
         <p class="font-mono text-base leading-relaxed text-slate-600">
-          A journey through entrepreneurial growth — from concept sparks to
-          fully-fledged ventures, highlighting milestones that shaped each
-          business along the way.
+          From early ideas to running real ventures, each milestone along the way
+          has shaped how I think about building and growing a business.
         </p>
       </div>
     </div>

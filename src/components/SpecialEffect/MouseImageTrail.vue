@@ -10,8 +10,8 @@ const props = defineProps({
 const containerRef = ref(null)
 const ready = ref(false)
 
-const last = ref({ x: 0, y: 0 })
-const renderCount = ref(0)
+let last = { x: 0, y: 0 }
+let renderCount = 0
 
 let rect // cache bounds
 const updateRect = () => { rect = containerRef.value?.getBoundingClientRect() }
@@ -39,58 +39,73 @@ onBeforeUnmount(() => window.removeEventListener('resize', updateRect))
 
 const dist = (x1, y1, x2, y2) => Math.hypot(x2 - x1, y2 - y1)
 
+const ENTER = 500
+const HOLD = 5000
+const EXIT = 500
+const TOTAL = ENTER + HOLD + EXIT
+
 const renderNext = (x, y) => {
-  const idx = renderCount.value % props.images.length
+  const idx = renderCount % props.images.length
   const el = containerRef.value?.querySelector(`[data-mouse-move-index="${idx}"]`)
   if (!el) return
 
+  el.getAnimations().forEach(a => a.cancel())
+
   el.style.top = `${y}px`
   el.style.left = `${x}px`
-  el.style.zIndex = String(renderCount.value)
+  el.style.zIndex = String(renderCount)
+  el.style.willChange = 'transform, opacity'
 
   const rot = Math.random() * props.rotationRange
   const sign = idx % 2 ? 1 : -1
 
-  el.animate(
+  const anim = el.animate(
     [
-      { opacity: 0, transform: `translate3d(-50%,-25%,0) scale(.5) rotate(${sign * rot}deg)` },
-      { opacity: 1, transform: `translate3d(-50%,-50%,0) scale(1) rotate(${-sign * rot}deg)` },
+      { opacity: 0, transform: `translate3d(-50%,-25%,0) scale(.5) rotate(${sign * rot}deg)`, offset: 0 },
+      { opacity: 1, transform: `translate3d(-50%,-50%,0) scale(1) rotate(${-sign * rot}deg)`, offset: ENTER / TOTAL },
+      { opacity: 1, transform: `translate3d(-50%,-50%,0) scale(1) rotate(${-sign * rot}deg)`, offset: (ENTER + HOLD) / TOTAL },
+      { opacity: 0, transform: `translate3d(-50%,-50%,0) scale(1) rotate(${-sign * rot}deg)`, offset: 1 },
     ],
-    { duration: 500, easing: 'cubic-bezier(.2,.6,.2,1)', fill: 'forwards' }
+    { duration: TOTAL, easing: 'linear', fill: 'forwards' }
   )
-  el.animate([{ opacity: 1 }, { opacity: 0 }], {
-    duration: 500, delay: 5000, easing: 'linear', fill: 'forwards',
-  })
+  anim.finished.then(() => { el.style.willChange = 'auto' })
 
-  renderCount.value++
+  renderCount++
 }
 
 // rAF throttle so we don’t do work on every mouse event
 let rafPending = false
 let nextX = 0, nextY = 0
 
-const onMove = (e) => {
+const handleCoords = (clientX, clientY) => {
   if (!ready.value) return
   if (!rect) updateRect()
-  nextX = e.clientX - rect.left
-  nextY = e.clientY - rect.top
+  nextX = clientX - rect.left
+  nextY = clientY - rect.top
   if (rafPending) return
   rafPending = true
   requestAnimationFrame(() => {
-    if (dist(nextX, nextY, last.value.x, last.value.y) >= props.renderImageBuffer) {
-      last.value = { x: nextX, y: nextY }
+    if (dist(nextX, nextY, last.x, last.y) >= props.renderImageBuffer) {
+      last = { x: nextX, y: nextY }
       renderNext(nextX, nextY)
     }
     rafPending = false
   })
 }
+
+const onMove = (e) => handleCoords(e.clientX, e.clientY)
+
+const onTouch = (e) => {
+  const touch = e.touches[0]
+  if (touch) handleCoords(touch.clientX, touch.clientY)
+}
 </script>
 
 <template>
-  <div ref="containerRef" class="mouse-trail" @mousemove="onMove" @mouseenter="updateRect()">
+  <div ref="containerRef" class="mouse-trail" @mousemove="onMove" @mouseenter="updateRect()" @touchmove.passive="onTouch" @touchstart.passive="updateRect()">
     <slot />
     <img v-for="(img, i) in images" :key="i" :src="img" :alt="`mouse move image ${i}`" :data-mouse-move-index="i"
-      v-show="ready" loading="eager" decoding="async" fetchpriority="high" class="trail-img" />
+      v-show="ready" loading="eager" decoding="async" class="trail-img" />
   </div>
 </template>
 
@@ -111,8 +126,6 @@ const onMove = (e) => {
   border: 2px solid #000;
   object-fit: cover;
   opacity: 0;
-  /* smooth compositing */
-  will-change: transform, opacity;
   transform: translate3d(-50%, -50%, 0);
   backface-visibility: hidden;
   contain: layout paint;

@@ -39,7 +39,7 @@ import track from '@/assets/music.mp3'
   inset: 0;
   /* lebih rapi, cover penuh area */
   z-index: 0;
-  background-image: url('https://i.imgur.com/PsjPzdO.png');
+  background-image: url('https://i.imgur.com/PsjPzdO.webp');
   background-repeat: repeat;
   background-size: 220px 220px;
   /* size eksplisit */
