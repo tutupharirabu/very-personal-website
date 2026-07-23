@@ -1,0 +1,55 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import EditorShell from '@/components/ide/EditorShell.astro';
+import type { FileMeta } from '@/components/ide/EditorShell.astro';
+import Sidebar from '@/components/ide/Sidebar.astro';
+import ProjectFile from '@/components/ide/files/ProjectFile.astro';
+import ReadmeFile from '@/components/ide/files/ReadmeFile.astro';
+import ExperienceFile from '@/components/ide/files/ExperienceFile.astro';
+import StackFile from '@/components/ide/files/StackFile.astro';
+import CertificationsFile from '@/components/ide/files/CertificationsFile.astro';
+import MusicToggle from '@/components/MusicToggle.astro';
+import { projects } from '@/data/projects.js';
+
+const projectMeta: Record<string, { filename: string; accent: string; watermark: string }> = {
+  'matchako-landing-page': { filename: 'matchako.js', accent: '#6bcb77', watermark: 'Astro' },
+  'spacerent-btp-v2': { filename: 'spacerent-v2.js', accent: '#4e94ce', watermark: 'Inertia' },
+  'iot-analytics-platform': { filename: 'iot-platform.js', accent: '#c586c0', watermark: 'MQTT' },
+  'pos-website': { filename: 'pos.js', accent: '#ce9178', watermark: 'Laravel' },
+  'spacerent-btp-v1': { filename: 'spacerent-v1.js', accent: '#dcdcaa', watermark: 'Laravel' },
+};
+
+const files: FileMeta[] = [
+  { id: 'readme', filename: 'readme.js', accent: '#4e94ce', watermark: 'zara' },
+  ...projects.map((p) => ({
+    id: p.slug,
+    filename: projectMeta[p.slug].filename,
+    accent: projectMeta[p.slug].accent,
+    watermark: projectMeta[p.slug].watermark,
+    group: 'projects',
+  })),
+  { id: 'experience', filename: 'experience.js', accent: '#dcdcaa', watermark: '' },
+  { id: 'stack', filename: 'stack.js', accent: '#34d399', watermark: 'stack' },
+  { id: 'certifications', filename: 'certs.js', accent: '#fbbf24', watermark: 'certs' },
+];
+---
+
+<BaseLayout>
+  <EditorShell files={files}>
+    <Sidebar files={files} slot="sidebar" />
+    <Fragment slot="files">
+      <div class="file" data-file="readme"><ReadmeFile /></div>
+      {
+        projects.map((p) => (
+          <template data-file-tpl={p.slug}>
+            <ProjectFile project={p} />
+          </template>
+        ))
+      }
+      <template data-file-tpl="experience"><ExperienceFile /></template>
+      <template data-file-tpl="stack"><StackFile /></template>
+      <template data-file-tpl="certifications"><CertificationsFile /></template>
+    </Fragment>
+  </EditorShell>
+  <MusicToggle />
+</BaseLayout>

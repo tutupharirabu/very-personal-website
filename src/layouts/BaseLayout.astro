@@ -1,0 +1,50 @@
+---
+import '@/styles/global.css';
+import fontWoff2 from '@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-400-normal.woff2';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'zara.js',
+  description = 'Portfolio of Irfan Zharauri (Zara) — Full-Stack Alchemist, System Analyst, and DevSecOps explorer based in Bandung, Indonesia. Browsed like a code editor.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/webp" href="/logo.webp" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="/logo.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#121212" />
+    <link rel="preload" href={fontWoff2} as="font" type="font/woff2" crossorigin />
+    <script is:inline>
+      // Apply saved theme before paint to avoid a flash.
+      (() => {
+        try {
+          const t = localStorage.getItem('theme');
+          if (t === 'light' || t === 'dark') {
+            document.documentElement.setAttribute('data-theme', t);
+          }
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <main>
+      <slot />
+    </main>
+  </body>
+</html>

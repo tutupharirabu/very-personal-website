@@ -1,0 +1,25 @@
+---
+import Line from '@/components/ide/Line.astro';
+import AsciiBand from '@/components/ide/AsciiBand.astro';
+import { stack } from '@/data/stack.js';
+---
+
+<div class="code">
+  <AsciiBand rows={3} seed={4} />
+  <Line pad />
+  <Line><h2 class="code-title">toolchain.allow</h2></Line>
+  <Line><span class="code-sub">// the tools I reach for — grouped and battle-tested</span></Line>
+  <Line pad />
+  {
+    stack.map((group) => (
+      <>
+        <Line><span class="code-comment"># {group.category}</span></Line>
+        {group.tools.map((tool) => (
+          <Line><span style="color:var(--syntax-comment)">&check;</span> <span class="code-p">{tool}</span></Line>
+        ))}
+        <Line pad />
+      </>
+    ))
+  }
+  <AsciiBand rows={3} seed={1} />
+</div>

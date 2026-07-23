@@ -1,0 +1,14 @@
+---
+// A single numbered code line. Must be a direct child of a `.code` container
+// so the CSS line counter increments correctly.
+interface Props {
+  deco?: boolean;
+  pad?: boolean;
+  class?: string;
+}
+const { deco, pad, class: cls } = Astro.props;
+---
+
+<div class:list={['line', deco && 'line--deco', pad && 'line--pad', cls]}>
+  <div class="line-content"><slot /></div>
+</div>

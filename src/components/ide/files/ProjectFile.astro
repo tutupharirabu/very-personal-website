@@ -1,0 +1,81 @@
+---
+import Line from '@/components/ide/Line.astro';
+import AsciiBand from '@/components/ide/AsciiBand.astro';
+import BrowserFrame from '@/components/ide/BrowserFrame.astro';
+import { Image } from 'astro:assets';
+
+interface Props {
+  project: any;
+}
+const { project } = Astro.props;
+const domain = project.link ? project.link.replace(/^https?:\/\//, '').replace(/\/$/, '') : `~/projects/${project.slug}`;
+const dashes = '—'.repeat(60);
+---
+
+<div class="code">
+  <AsciiBand rows={4} seed={1} />
+  <Line pad />
+  <Line><h2 class="code-title">{project.title}</h2></Line>
+  <Line><span class="code-sub">// {project.type} · {project.year} · {project.myRole}</span></Line>
+  <Line pad />
+  <AsciiBand rows={2} seed={3} />
+  <Line pad />
+  <Line>
+    <BrowserFrame src={project.heroImage} alt={project.title} url={domain} />
+  </Line>
+  <Line pad />
+  <Line><span class="code-divider">{`— Overview ${dashes}`}</span></Line>
+  <Line pad />
+  <Line>
+    <div class="code-cols">
+      <div>
+        <p class="code-p rich" set:html={project.lede} />
+        <p class="code-p rich code-muted" style="margin-top:1.25rem" set:html={project.context} />
+      </div>
+      <div>
+        <div class="meta-block"><span class="meta-label">Role</span><br /><span class="meta-value">{project.myRole}</span></div>
+        <div class="meta-block"><span class="meta-label">Year</span><br /><span class="meta-value">{project.year}</span></div>
+        <div class="meta-block"><span class="meta-label">Timeline</span><br /><span class="meta-value">{project.timeline}</span></div>
+        <div class="meta-block"><span class="meta-label">Stack</span><br /><span class="meta-value">{project.techStack}</span></div>
+        {
+          project.link && (
+            <div class="meta-block">
+              <span class="meta-label">Website</span>
+              <br />
+              <a class="code-link" href={project.link} target="_blank" rel="noopener noreferrer">
+                {domain} ↗
+              </a>
+            </div>
+          )
+        }
+      </div>
+    </div>
+  </Line>
+  <Line pad />
+  <Line><p class="code-h">Challenge</p></Line>
+  <Line><p class="code-p rich code-muted" style="margin-top:.4rem" set:html={project.challenge} /></Line>
+  <Line pad />
+  <Line><span class="code-divider">{`— Screens ${dashes}`}</span></Line>
+  <Line pad />
+  <Line>
+    <div class="shots">
+      {
+        project.gallery.map((g: any) => (
+          <figure class="shot">
+            <Image src={g.src} alt={g.caption} widths={[320, 640]} sizes="(max-width: 768px) 45vw, 300px" loading="lazy" />
+            <figcaption>{g.caption}</figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </Line>
+  <Line pad />
+  <Line><span class="code-comment">/* Discovery */</span></Line>
+  {project.discovery.map((d: string) => (
+    <Line><span class="role-item rich" set:html={d} /></Line>
+  ))}
+  <Line pad />
+  <Line><p class="code-h">Summary</p></Line>
+  <Line><p class="code-p rich" style="margin-top:.4rem" set:html={project.summary} /></Line>
+  <AsciiBand rows={3} seed={5} />
+</div>

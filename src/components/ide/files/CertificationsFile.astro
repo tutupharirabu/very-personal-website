@@ -1,0 +1,66 @@
+---
+import Line from '@/components/ide/Line.astro';
+import AsciiBand from '@/components/ide/AsciiBand.astro';
+import { certifications } from '@/data/certifications.js';
+import { Image } from 'astro:assets';
+
+const humanizeKey = (key: string): string => {
+  const map: Record<string, string> = {
+    certificateId: 'Certificate ID',
+    field: 'Field',
+    certificateNumber: 'Certificate Number',
+    registrationNumber: 'Registration Number',
+    issuingBody: 'Issuing Body',
+    validity: 'Validity',
+  };
+  return map[key] ?? key;
+};
+
+const dashes = '─'.repeat(20);
+---
+
+<div class="code">
+  <AsciiBand rows={3} seed={5} />
+  <Line pad />
+  <Line><h2 class="code-title">certifications</h2></Line>
+  <Line><span class="code-sub">// skills put to the test and independently verified</span></Line>
+  <Line pad />
+  {
+    certifications.map((cert) => (
+      <>
+        <Line><span class="code-divider">{`─ ${cert.name} ${dashes}`}</span></Line>
+        <Line pad />
+        <Line>
+          <div class="code-cols">
+            <div>
+              <figure class="shot">
+                <Image src={cert.image} alt={cert.name} widths={[400, 800]} sizes="(max-width: 1023px) 90vw, 400px" loading="lazy" />
+                <figcaption>{cert.issuer} &middot; {cert.year}</figcaption>
+              </figure>
+            </div>
+            <div>
+              <div class="meta-block">
+                <span class="meta-label">Issuer</span><br />
+                <span class="meta-value">{cert.issuer}</span>
+              </div>
+              <div class="meta-block">
+                <span class="meta-label">Year</span><br />
+                <span class="meta-value">{cert.year}</span>
+              </div>
+              {
+                Object.entries(cert.details).map(([key, value]) => (
+                  <div class="meta-block">
+                    <span class="meta-label">{humanizeKey(key)}</span><br />
+                    <span class="meta-value">{value}</span>
+                  </div>
+                ))
+              }
+            </div>
+          </div>
+        </Line>
+        <Line pad />
+      </>
+    ))
+  }
+  <AsciiBand rows={3} seed={2} />
+</div>

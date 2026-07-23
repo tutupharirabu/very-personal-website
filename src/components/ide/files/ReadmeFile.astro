@@ -1,0 +1,53 @@
+---
+import Line from '@/components/ide/Line.astro';
+import AsciiBand from '@/components/ide/AsciiBand.astro';
+import { aboutHeadline, aboutParagraphs, badge } from '@/data/bio.js';
+import portrait from '@/assets/irfan.webp';
+import { highlights } from '@/data/highlights.js';
+import { Image } from 'astro:assets';
+
+const dash = '\u2014'.repeat(50);
+---
+
+<div class="code">
+  <AsciiBand rows={2} seed={0} />
+  <Line pad />
+  <Line>
+    <figure class="readme-photo">
+      <Image src={portrait} alt="Zara" widths={[280, 560]} sizes="280px" loading="eager" />
+    </figure>
+  </Line>
+  <Line pad />
+  <Line><h1 class="code-title">{aboutHeadline}</h1></Line>
+  <Line><span class="code-sub">// a quick introduction</span></Line>
+  <Line pad />
+  {
+    aboutParagraphs.map((p) => (
+      <Fragment>
+        <Line><p class="code-p rich" set:html={p} /></Line>
+        <Line pad />
+      </Fragment>
+    ))
+  }
+  <AsciiBand rows={2} seed={3} />
+  <Line><span class="code-divider">{`\u2014 2026 update ${dash}`}</span></Line>
+  <Line pad />
+  <Line><p class="code-p rich code-muted" set:html={badge.html} /></Line>
+  <Line pad />
+  <AsciiBand rows={2} seed={1} />
+  <Line><span class="code-divider">{`\u2014 highlights ${dash}`}</span></Line>
+  <Line pad />
+  {
+    highlights.map((h, i) => (
+      <Fragment>
+        <Line>
+          <span class="code-key">{String(i + 1).padStart(2, '0')}</span>
+          <span class="code-h"> {h.metric} {'\u2014'} {h.title}</span>
+          <p class="code-p code-muted" style="margin-top:.25rem">{h.body}</p>
+        </Line>
+        <Line pad />
+      </Fragment>
+    ))
+  }
+  <AsciiBand rows={3} seed={5} />
+</div>

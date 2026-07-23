@@ -1,0 +1,29 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+// A mock browser window framing a screenshot (the "live preview" look).
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  url?: string;
+}
+const { src, alt, url } = Astro.props;
+---
+
+<div class="browser">
+  <div class="browser__bar">
+    <span class="dot dot--r"></span>
+    <span class="dot dot--y"></span>
+    <span class="dot dot--g"></span>
+    {url && <span class="browser__url">{url}</span>}
+  </div>
+  <Image
+    class="browser__img"
+    src={src}
+    alt={alt}
+    widths={[480, 800, 1200]}
+    sizes="(max-width: 860px) 92vw, 800px"
+    loading="lazy"
+  />
+</div>
