@@ -1,0 +1,41 @@
+---
+import Line from '@/components/ide/Line.astro';
+import AsciiBand from '@/components/ide/AsciiBand.astro';
+import { professional, ventures } from '@/data/experience.js';
+---
+
+<div class="code">
+  <span class="inline-watermark" style="top: 15%">work</span>
+  <span class="inline-watermark" style="bottom: 5%; font-size: clamp(4.5rem, 10vw, 11rem);">business</span>
+  <AsciiBand rows={3} seed={2} />
+  <Line pad />
+  <Line><h2 class="code-title">Experience</h2></Line>
+  <Line><span class="code-sub">// professional work + ventures, newest context last</span></Line>
+  <Line pad />
+  <Line><span class="code-divider">{`— professional ${'—'.repeat(48)}`}</span></Line>
+  <Line pad />
+  {
+    professional.map((item) => (
+      <>
+        <Line><time class="code-muted">{item.period}</time></Line>
+        <Line><span class="code-h">{item.title}</span></Line>
+        <Line><p class="code-p rich" set:html={item.description} /></Line>
+        <Line pad />
+      </>
+    ))
+  }
+  <AsciiBand rows={2} seed={4} />
+  <Line><span class="code-divider">{`— ventures ${'—'.repeat(52)}`}</span></Line>
+  <Line pad />
+  {
+    ventures.map((item) => (
+      <>
+        <Line><time class="code-muted">{item.period}</time></Line>
+        <Line><span class="code-h">{item.title}</span></Line>
+        <Line><p class="code-p rich" set:html={item.description} /></Line>
+        <Line pad />
+      </>
+    ))
+  }
+  <AsciiBand rows={3} seed={0} />
+</div>

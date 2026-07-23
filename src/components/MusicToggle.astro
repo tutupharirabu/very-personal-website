@@ -1,0 +1,88 @@
+---
+// Floating ambient-music toggle (preserves the original site's player).
+import track from '@/assets/music.mp3';
+---
+
+<div class="fixed bottom-5 right-5 z-[9999]">
+  <div class="group relative" id="music-root">
+    <!-- Volume popover -->
+    <div
+      id="music-vol"
+      class="pointer-events-none absolute right-16 top-1/2 flex w-40 -translate-y-1/2 items-center gap-2 rounded-xl border border-white/10 bg-neutral-900/90 p-2 opacity-0 shadow-lg backdrop-blur transition-opacity duration-200 group-hover:pointer-events-auto group-hover:opacity-100"
+    >
+      <svg class="h-4 w-4 shrink-0 text-slate-300" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+        <path d="M12 4v12l-4-3H4V7h4l4-3z"></path>
+      </svg>
+      <input
+        id="music-range"
+        type="range"
+        min="0"
+        max="1"
+        step="0.01"
+        value="0.6"
+        class="w-full accent-indigo-400"
+        aria-label="Music volume"
+      />
+    </div>
+
+    <!-- Main button -->
+    <button
+      id="music-toggle"
+      type="button"
+      aria-pressed="false"
+      aria-label="Play music"
+      class="rounded-full border border-white/10 bg-neutral-900/85 p-3 text-white shadow-[0_8px_24px_rgba(0,0,0,.35)] backdrop-blur transition hover:bg-neutral-800/90 focus:outline-none focus:ring-2 focus:ring-indigo-400/60 active:scale-95"
+    >
+      <svg id="music-icon-on" viewBox="0 0 24 24" class="hidden h-6 w-6" fill="none" aria-hidden="true">
+        <path d="M11 5L6 9H2v6h4l5 4V5z" fill="currentColor"></path>
+        <path d="M15.54 8.46a5 5 0 010 7.07" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+        <path d="M19.07 4.93a10 10 0 010 14.14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+      </svg>
+      <svg id="music-icon-off" viewBox="0 0 24 24" class="h-6 w-6" fill="none" aria-hidden="true">
+        <path d="M11 5L6 9H2v6h4l5 4V5z" fill="currentColor"></path>
+        <path d="M16 9l4 4m0-4l-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+      </svg>
+    </button>
+
+    <audio id="music-audio" src={track} preload="none" loop playsinline></audio>
+  </div>
+</div>
+
+<script>
+  const audio = document.getElementById('music-audio') as HTMLAudioElement | null;
+  const btn = document.getElementById('music-toggle');
+  const iconOn = document.getElementById('music-icon-on');
+  const iconOff = document.getElementById('music-icon-off');
+  const range = document.getElementById('music-range') as HTMLInputElement | null;
+
+  if (audio && btn && iconOn && iconOff && range) {
+    audio.volume = Number(range.value);
+
+    const render = (playing: boolean) => {
+      iconOn.classList.toggle('hidden', !playing);
+      iconOff.classList.toggle('hidden', playing);
+      btn.setAttribute('aria-pressed', String(playing));
+      btn.setAttribute('aria-label', playing ? 'Pause music' : 'Play music');
+    };
+
+    btn.addEventListener('click', async () => {
+      if (audio.paused) {
+        try {
+          await audio.play();
+          render(true);
+        } catch {
+          render(false);
+        }
+      } else {
+        audio.pause();
+        render(false);
+      }
+    });
+
+    range.addEventListener('input', () => {
+      audio.volume = Number(range.value);
+    });
+
+    audio.addEventListener('ended', () => render(false));
+  }
+</script>

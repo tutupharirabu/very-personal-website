@@ -1,0 +1,28 @@
+---
+// A band of decorative, numbered "comment" lines that give the editor its
+// textured ASCII look. Renders `rows` numbered `.line--deco` rows.
+interface Props {
+  rows?: number;
+  seed?: number;
+}
+const { rows = 3, seed = 0 } = Astro.props;
+
+const patterns = [
+  '/---/------------/---------/-----/--------------/------/',
+  '//++++++/---------/+++++++++++/-----/////-----------/---/',
+  '/====/-------/*************/------------/=====/----------/',
+  '////-------/-----------------/+++++++++/-----/-----/------/',
+  '/------/////-------/=========/---------/*******/----------/',
+  '/**/----/------------/++++/----------/=======/----/-------/',
+];
+
+const lines = Array.from({ length: rows }, (_, i) => patterns[(seed + i) % patterns.length].repeat(3));
+---
+
+{
+  lines.map((p) => (
+    <div class="line line--deco" aria-hidden="true">
+      <div class="line-content">{p}</div>
+    </div>
+  ))
+}
