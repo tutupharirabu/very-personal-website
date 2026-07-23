@@ -31,3 +31,6 @@ coverage
 *.sw?
 
 *.tsbuildinfo
+
+# Command Code taste (per-user)
+.commandcode/taste/
